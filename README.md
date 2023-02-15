@@ -1,1 +1,2 @@
-# inference_cost_model
+# Inference Cost Model
+
