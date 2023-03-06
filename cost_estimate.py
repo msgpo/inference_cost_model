@@ -50,10 +50,11 @@ connect_spec["PCIe1.0X4"] = {"delay": 0, "bandwidth": 1}
 connect_spec["PCIe2.0X1"] = {"delay": 0, "bandwidth": 0.5}
 connect_spec["PCIe3.0X1"] = {"delay": 0, "bandwidth": 1}
 connect_spec["PCIe3.0X4"] = {"delay": 0, "bandwidth": 4}
+connect_spec["PCIe4.0X16"] = {"delay": 0, "bandwidth": 32} # The current Crusoe A100-80G setting
 
 
 def check_model_for_all_gpus(model_key="gpt-j-6b", connect_key="PCIe2.0X1", batch_size=1, seq_in=128, seq_out=32):
-    with open(f"./{model_key}_b{batch_size}_in{seq_in}_out{seq_out}.md", "w") as fp:
+    with open(f"./{model_key}_{connect_key}_b{batch_size}_in{seq_in}_out{seq_out}.md", "w") as fp:
         fp.write("# Cost Estimation\n")
         fp.write("### Setting\n")
 
@@ -65,6 +66,7 @@ def check_model_for_all_gpus(model_key="gpt-j-6b", connect_key="PCIe2.0X1", batc
         bandwidth = connect_spec[connect_key]["bandwidth"] * 1073741824
         print(f"Model <{model_key}>, model_size: {model_size/1073741824} GB\n")
         fp.write(f"- Model: {model_key} (model dim: {h_dim}, num of layers: {num_layers})\n")
+        fp.write(f"- Intra-node connection: {connect_key}\n")
         fp.write(f"- Batch size: {batch_size}\n")
         fp.write(f"- Input sequence length: {seq_in}\n")
         fp.write(f"- Output sequence length: {seq_out}\n\n")
@@ -95,3 +97,12 @@ check_model_for_all_gpus(model_key="gpt-neox-20b", connect_key="PCIe2.0X1", batc
 check_model_for_all_gpus(model_key="gpt-neox-20b", connect_key="PCIe2.0X1", batch_size=1, seq_in=512, seq_out=256)
 check_model_for_all_gpus(model_key="gpt-neox-20b", connect_key="PCIe2.0X1", batch_size=16, seq_in=512, seq_out=256)
 
+check_model_for_all_gpus(model_key="gpt-j-6b", connect_key="PCIe4.0X16", batch_size=1, seq_in=128, seq_out=32)
+check_model_for_all_gpus(model_key="gpt-j-6b", connect_key="PCIe4.0X16", batch_size=16, seq_in=128, seq_out=32)
+check_model_for_all_gpus(model_key="gpt-j-6b", connect_key="PCIe4.0X16", batch_size=1, seq_in=512, seq_out=256)
+check_model_for_all_gpus(model_key="gpt-j-6b", connect_key="PCIe4.0X16", batch_size=16, seq_in=512, seq_out=256)
+
+check_model_for_all_gpus(model_key="gpt-neox-20b", connect_key="PCIe4.0X16", batch_size=1, seq_in=128, seq_out=32)
+check_model_for_all_gpus(model_key="gpt-neox-20b", connect_key="PCIe4.0X16", batch_size=16, seq_in=128, seq_out=32)
+check_model_for_all_gpus(model_key="gpt-neox-20b", connect_key="PCIe4.0X16", batch_size=1, seq_in=512, seq_out=256)
+check_model_for_all_gpus(model_key="gpt-neox-20b", connect_key="PCIe4.0X16", batch_size=16, seq_in=512, seq_out=256)

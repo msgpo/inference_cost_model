@@ -1,6 +1,7 @@
 # Cost Estimation
 ### Setting
 - Model: gpt-neox-20b (model dim: 6144, num of layers: 44)
+- Intra-node connection: PCIe2.0X1
 - Batch size: 1
 - Input sequence length: 512
 - Output sequence length: 256

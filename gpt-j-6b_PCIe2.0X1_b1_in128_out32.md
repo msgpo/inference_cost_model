@@ -1,6 +1,7 @@
 # Cost Estimation
 ### Setting
 - Model: gpt-j-6b (model dim: 4096, num of layers: 28)
+- Intra-node connection: PCIe2.0X1
 - Batch size: 1
 - Input sequence length: 128
 - Output sequence length: 32
